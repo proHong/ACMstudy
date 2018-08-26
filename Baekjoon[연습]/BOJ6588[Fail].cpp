@@ -44,6 +44,7 @@ int main()
 			}
 			if (t) break;
 		}
+		delete[] number;
 
 	}
 	return 0;
