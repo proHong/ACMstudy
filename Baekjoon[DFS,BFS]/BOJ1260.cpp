@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <cstdio>
+#include <algorithm>
 #pragma warning(disable : 4996) 
 using namespace std;
 
@@ -54,6 +55,8 @@ int main()
 		line[s].push_back(e);
 		line[e].push_back(s);
 	}
+	for (int i = 1; i <= N; i++)
+		sort(line[i].begin(), line[i].end());
 	dfs(V);
 	printf("\n");
 	bfs(V);
