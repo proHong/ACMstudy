@@ -12,42 +12,42 @@ int dvisit[51][51];
 
 int dfs(int x, int y)
 {
-	dvisit[x][y] = true;
+	dvisit[y][x] = true;
 	int ans = 0;
-	if (M[x][y] == 0)
+	if (M[y][x] == 0)
 		return ans;
 	else
 		ans++;
 	if (x + 1 <= w && y + 1 <= h)
-		if (!dvisit[x + 1][y + 1])
+		if (!dvisit[y + 1][x + 1])
 			ans += dfs(x + 1, y + 1);
 	if (x - 1 > 0 && y - 1 > 0)
-		if (!dvisit[x - 1][y - 1])
+		if (!dvisit[y - 1][x - 1])
 			ans += dfs(x - 1, y - 1);
 	if (x + 1 <= w && y - 1 > 0)
-		if (!dvisit[x + 1][y - 1])
+		if (!dvisit[y - 1][x + 1])
 			ans += dfs(x + 1, y - 1);
 	if (x - 1 > 0 && y + 1 <= h)
-		if (!dvisit[x - 1][y + 1])
+		if (!dvisit[y + 1][x - 1])
 			ans += dfs(x - 1, y + 1);
 	if (y + 1 <= h)
-		if (!dvisit[x][y + 1])
+		if (!dvisit[y + 1][x])
 			ans += dfs(x, y + 1);
 	if (x + 1 <= w)
-		if (!dvisit[x + 1][y])
+		if (!dvisit[y][x + 1])
 			ans += dfs(x + 1, y);
 	if (x - 1 > 0)
-		if (!dvisit[x - 1][y])
+		if (!dvisit[y][x - 1])
 			ans += dfs(x - 1, y);
 	if (y - 1 > 0)
-		if (!dvisit[x][y - 1])
+		if (!dvisit[y - 1][x])
 			ans += dfs(x, y - 1);
 	return ans;
 }
 
 int main()
 {
-	while(true)
+	while (true)
 	{
 		scanf("%d %d", &w, &h);
 		if (w == 0 && h == 0)
@@ -65,13 +65,13 @@ int main()
 			}
 		}
 		multiset<int> ans;
-		for (int i = 1; i <= w; i++)
+		for (int i = 1; i <= h; i++)
 		{
-			for (int j = 1; j <= h; j++)
+			for (int j = 1; j <= w; j++)
 			{
 				if (!dvisit[i][j])
 				{
-					int temp = dfs(i, j);
+					int temp = dfs(j, i);
 					if (temp > 0)
 						ans.insert(temp);
 				}
