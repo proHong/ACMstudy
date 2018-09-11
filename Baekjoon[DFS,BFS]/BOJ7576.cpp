@@ -9,42 +9,65 @@ const int dy[] = { -1,1,0,0 };
 
 int n, m, a[1003][1003];
 queue<pair<int, int> > que;
+queue<pair<int, int> > tempque;
 
-int main() {
-
-	scanf("%d %d", &m, &n);
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			scanf("%d", &a[i][j]);
-			if (a[i][j] == 1) que.push({ i,j });
-		}
-	}
-
+void bfs()
+{
 	while (!que.empty()) {
 		auto now = que.front();
 		que.pop();
 
-		int y = now.first, x = now.second;
+		int x = now.first, y = now.second;
 
 		for (int i = 0; i < 4; i++) {
-			int ny = y + dy[i], nx = x + dx[i];
-			if (ny < 0 || ny >= n || nx < 0 || nx >= m) continue;
+			int nx = x + dx[i], ny= y + dy[i];
+			if (ny <= 0 || ny > n || nx <= 0 || nx > m) continue;
 			if (a[ny][nx] == 0) {
-				a[ny][nx] = a[y][x] + 1;
-				que.push({ ny,nx });
+				a[ny][nx] = 1;
+				tempque.push({ nx,ny });
 			}
 		}
 	}
+}
 
-	int mx = -1e9;
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			if (!a[i][j]) return !printf("-1");;
-			mx = max(mx, a[i][j]);
+
+int main() {
+
+	scanf("%d %d", &m, &n);
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= m; j++) {
+			scanf("%d", &a[i][j]);
+			if (a[i][j] == 1) que.push({ j,i });
 		}
 	}
+	int ans = -1;
+	while (!que.empty()) {
+		
+		bfs();
+		while (!tempque.empty())
+		{
+			auto temp = tempque.front();
+			que.push(temp);
+			tempque.pop();
+		}
+		ans++;
+	}
 
-	printf("%d", mx - 1);
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= m; j++) {
+			if (a[i][j] == 0)
+			{
+				ans = -1;
+				break;
+			}
+		}
+		if (ans == -1)
+			break;
+	}
+
+
+
+	printf("%d\n", ans);
 
 	return 0;
 }
