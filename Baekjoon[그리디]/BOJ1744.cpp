@@ -25,30 +25,16 @@ int main()
 		else
 			mv.push_back(input);
 	}
+	if (pv.size() % 2 == 1)
+		pv.push_back(1);
+	if (mv.size() % 2 == 1)
+		mv.push_back(1);
 	sort(pv.begin(), pv.end(), greater<int>());
-	sort(mv.begin(), mv.begin());
-	for (int i = 0; i < pv.size(); i++)
-	{
-
-		if (i + 1 >=pv.size())
-			ans += pv[i];
-		else 
-		{
-			ans += pv[i] * pv[i + 1];
-			i++;
-		}
-	}
-	for (int i = 0; i < mv.size(); i++)
-	{
-
-		if (i + 1 >= mv.size())
-			ans += mv[i];
-		else
-		{
-			ans += mv[i] * mv[i + 1];
-			i++;
-		}
-	}
+	sort(mv.begin(), mv.end());
+	for (int i = 0; i < pv.size(); i+=2)
+		ans += pv[i] * pv[i + 1];
+	for (int i = 0; i < mv.size(); i+=2)
+		ans += mv[i] * mv[i + 1];
 
 
 	printf("%d\n", ans);
